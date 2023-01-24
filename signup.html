@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <style>
+        .error{
+            color: red;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+          <p class="error"></p>
+       <form class="signup">
+           <fieldset>
+
+            <legend>Signup Form</legend>
+             <label for="name">Name</label> <br>
+             <input type="text" name="name" id="name" placeholder="Enter your name">
+             <br> <br>
+             <label for="email">Email</label><br>
+             <input type="email" name="email" id="email" placeholder="Enter your Email">
+             <br><br>
+             <label for="password">Password</label><br>
+             <input type="password" name="password" id="password" placeholder="Enter your password">
+             <br><br>
+             <label for="confirm-password">Confirm Password</label><br>
+             <input type="password" name="confirm-password" id="confirm-password" placeholder="Enter your Password Again">
+             <br><br>
+
+             <input type="submit">
+
+            </fieldset>
+       </form>
+
+
+
+       <script>
+         
+
+let signup_form  = document.querySelector('.signup');
+
+let input_name = document.querySelector('#name');
+let input_email = document.querySelector('#email');
+let input_password = document.querySelector('#password');
+let input_confirm_password = document.querySelector('#confirm-password');
+let error = document.querySelector('.error');
+
+
+
+signup_form.addEventListener('submit', validateForm)
+
+let arr = []
+let id = 1
+
+function validateForm(e) {
+     e.preventDefault();
+        let name = input_name.value;
+        let email = input_email.value;
+        let password = input_password.value;
+        let confirm_password = input_confirm_password.value;
+
+        if(checkNumberofWords(name) <2){
+           error.innerHTML = 'Name must be at least 2 words';
+        }
+        else if(email.indexOf('@') == -1){
+            error.innerHTML = 'Email must contain @';
+        }
+       else if(checkPassword(password,name, email) == false){
+            error.innerHTML = 'Password must contain at least 1 uppercase, 1 lowercase, 1 number and 1 special character';
+        }
+       else if(password != confirm_password){
+            error.innerHTML = 'Password and Confirm Password must be same';
+        }
+      else{
+            error.innerHTML = 'Form Submitted Successfully'; 
+
+            let obj = {id: id++, name, email , password}
+            arr.push(obj)
+            console.log(arr)
+      }
+
+    
+ }
+
+
+ function checkNumberofWords(name){
+
+      name = name.trim();
+
+      let arr = name.split(' ');
+
+      return arr.length
+ }
+
+
+ function checkPassword(password, name, email){ // "A$bhi123"
+    let cl = 0 , sl = 0, n=0, sc=0
+    for(let t of password){ //  A
+       if(t>="A" && t<="Z"){
+         cl= cl+1 // capital letter
+       }
+       else if(t>="a" && t<="z"){
+         sl++ // small letter
+       }
+       else if(t>="0" && t<="9"){
+            n++ // number
+         }
+         else{
+            sc++ // special character
+         }
+    }
+    if(cl>=1 && sl>=1 && n>=1 && sc>=1 && password !=name && password !=email){
+        return true
+    }
+    else{
+        return false
+    }
+ }
+
+
+
+
+
+
+
+       </script>
+</body>
+</html>
