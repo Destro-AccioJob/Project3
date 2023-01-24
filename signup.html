@@ -77,12 +77,23 @@ function validateForm(e) {
        else if(password != confirm_password){
             error.innerHTML = 'Password and Confirm Password must be same';
         }
+       else if(checkEmail(email) == false){
+            error.innerHTML = 'Email already exists';
+        }
       else{
             error.innerHTML = 'Form Submitted Successfully'; 
 
             let obj = {id: id++, name, email , password}
             arr.push(obj)
-            console.log(arr)
+            // console.log(arr)
+            input_name.value = '';
+            input_email.value = '';
+            input_password.value = '';
+            input_confirm_password.value = '';
+            // local stroage
+            localStorage.setItem("data" , JSON.stringify(arr))
+            window.location.href = "/login.html"
+            
       }
 
     
@@ -124,6 +135,14 @@ function validateForm(e) {
  }
 
 
+ function checkEmail(email){
+     for( t of arr){
+            if(t.email == email){
+                return false
+            }
+     }
+        return true
+ }
 
 
 

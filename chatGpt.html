@@ -9,7 +9,81 @@
 <body>
       <textarea name="" id="" cols="30" rows="10"></textarea> <br>
     <button>Submit</button>
+     <div class="answer">
 
-    <script src="./app.js"></script>
+     </div>
+
+     <div class="speak">
+
+     </div>
+
+    <script>
+       let data = [
+       {question: "What is a dog" , answer: "Dog is a animal with 4 legs", imageLink: "./dog.jpeg"},
+        {question: "What is a cat" , answer: "Cat is a animal with 4 legs", imageLink: "./cat.jpeg"},
+        {question: "What is a laptop" , answer: "Laptop is a machine", imageLink: "./laptop.jpeg"},
+       ]
+
+         let input_question = document.querySelector('textarea');
+         let submit_button = document.querySelector('button');
+            let answer = document.querySelector('.answer');
+            let speak = document.querySelector('.speak');
+
+         submit_button.addEventListener('click', chatGpt)
+
+         function chatGpt(){
+             let question = input_question.value;
+             
+
+             for(let t of data){
+                if(t.question == question){
+                    let p = document.createElement('p'); 
+                    p.className = "ansPara"
+                    p.innerHTML = t.answer;
+                    answer.appendChild(p);
+                    let img = document.createElement('img');
+                    img.src = t.imageLink;
+                    img.style.width = "300px";
+                    answer.appendChild(img);
+
+                    let inputbox = document.createElement('input');
+                    inputbox.type = "text";
+                    inputbox.placeholder = "Enter your Token";
+                    speak.appendChild(inputbox);
+                    let btn = document.createElement('button');
+                    btn.innerHTML = "Speak";
+                    speak.appendChild(btn);
+
+                    btn.addEventListener('click', abhishekGpt)
+
+                 
+
+
+                }
+             }
+             
+            }
+             
+            function abhishekGpt(){
+
+                   /// access the array from login as it loal strorage
+
+
+
+               let ansPara_box = document.querySelector('.ansPara');
+               let anspara = ansPara_box.innerHTML;
+               let utter = new SpeechSynthesisUtterance();
+                utter.lang = "en-US";
+                utter.text = anspara;
+                utter.volume = 0.4 
+
+                window.speechSynthesis.speak(utter);
+
+            }
+
+
+
+
+    </script>
 </body>
 </html>

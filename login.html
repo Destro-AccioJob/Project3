@@ -5,9 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
-       <form>
+       <p class="error"></p>
+       <form class="login">
            <fieldset>
 
             <legend>Login Form</legend>
@@ -23,6 +29,73 @@
             </fieldset>
        </form>
 
-       <script src="./app.js"></script>
+       <script>
+          let login_form  = document.querySelector('.login');
+            let error = document.querySelector('.error');
+
+          login_form.addEventListener('submit', loginForm)
+          let login_email = document.querySelector('#email');
+          let login_password = document.querySelector('#password');
+          let data
+          function loginForm(e){
+            e.preventDefault();
+            data = JSON.parse(localStorage.getItem('data'));
+            let email = login_email.value;
+            let password = login_password.value;
+            let cases = ["Email not found", "Password Incorrect", "Login Successful"]
+             let x = checkLogin(email, password)
+              if(x==0 || x==1){
+                    error.innerHTML = cases[x]
+              }
+              else{
+                    error.innerHTML = cases[x]   
+              }
+
+          }
+
+
+          function checkLogin(email, password){
+            let flag = 0
+             for(let t of data){
+                if(t.email == email){
+                    if(t.password == password){
+                        return 2
+                    }
+                    else{
+                        return 1
+                    }
+                    flag = 1
+                }
+             }
+             if(flag == 0){
+                 return 0
+             }
+          }
+
+
+          function generateToken(){
+             let capital_digit = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 
+             let small_digit = "abcdefghijklmnopqrstuvwxyz" 
+             let number = "0123456789" 
+             let special = "!@#$%^&*()_+" 
+
+             let characters = capital_digit + small_digit + number + special
+
+             let token = ""
+             for(let i=0; i<10; i++){
+                 let random = Math.floor(Math.random()*characters.length) // 4
+                 token = token + characters[random]
+             }
+                return token //  store the token in the perosn object who logged in
+          }
+
+
+          function generateToken1(){
+            //   let token = crypto.randomUUID() // extract 10 charcaters from it
+          }
+              
+          
+
+       </script>
 </body>
 </html>
